@@ -56,9 +56,9 @@ public class ArticleDAO implements DAO<Article>{
 		return jdbcTemplate.queryForObject(sql,args,(rs, rowNum) -> {
 		final Article article =new Article();
 		article.setId(rs.getInt("ID"));
-		final User user=new User();
-		user.setId(rs.getInt("USER_ID"));
-		article.setUser(user);
+		final User u=new User();
+		u.setId(rs.getInt("USER_ID"));
+		article.setUser(u);
 		article.setName(rs.getString("NAME"));
 		article.setContent(rs.getString("CONTENT"));
 		article.setPublishedDate(rs.getTimestamp("PUBLISHED_DATE").toLocalDateTime());

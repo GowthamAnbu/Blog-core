@@ -57,12 +57,12 @@ public class CategoryDetailDAO implements DAO<CategoryDetail> {
 		return jdbcTemplate.queryForObject(sql,args , (rs, rowNum) -> {
 		final CategoryDetail categoryDetail = new CategoryDetail();
 		categoryDetail.setId(rs.getInt("ID"));
-		final Article article = new Article();
-		article.setId(rs.getInt("ARTICLE_ID"));
-		categoryDetail.setArticle(article);
-		final Category category = new Category();
-		category.setId(rs.getInt("CATEGORY_ID"));
-		categoryDetail.setCategory(category);
+		final Article a = new Article();
+		a.setId(rs.getInt("ARTICLE_ID"));
+		categoryDetail.setArticle(a);
+		final Category c = new Category();
+		c.setId(rs.getInt("CATEGORY_ID"));
+		categoryDetail.setCategory(c);
 		return categoryDetail;
 	});
 	}

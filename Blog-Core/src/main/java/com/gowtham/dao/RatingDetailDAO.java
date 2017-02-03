@@ -56,11 +56,11 @@ public class RatingDetailDAO implements DAO<RatingDetail>{
 		return jdbcTemplate.queryForObject(sql, args, (rs, rowNum) -> {
 		final RatingDetail ratingDetail = new RatingDetail();
 		ratingDetail.setId(rs.getInt("ID"));
-		final Article article = new Article();
-		article.setId(rs.getInt("ARTICLE_ID"));
-		ratingDetail.setArticle(article);
-		final User user = new User();
-		user.setId(rs.getInt("USER_ID"));
+		final Article a = new Article();
+		a.setId(rs.getInt("ARTICLE_ID"));
+		ratingDetail.setArticle(a);
+		final User u = new User();
+		u.setId(rs.getInt("USER_ID"));
 		ratingDetail.setRating(rs.getInt("RATINGS"));
 		return ratingDetail;
 	});

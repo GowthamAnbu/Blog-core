@@ -63,14 +63,6 @@ public class UserDAO implements DAO<User> {
 		});
 	}
 	
-
-	public int updateuser(User user)
-	{
-		String sql = "UPDATE USERS SET ROLE_ID=? WHERE ID=?";
-		Object[] args = { user.getRole().getId(), user.getId() };
-		return jdbcTemplate.update(sql, args);
-	}
-	
 	public Boolean isValid(String name){
 		String sql="SELECT ISVALID(?)";
 		Object[] args={name};

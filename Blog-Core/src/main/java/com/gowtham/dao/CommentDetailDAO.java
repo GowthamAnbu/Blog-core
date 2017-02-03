@@ -56,11 +56,11 @@ public class CommentDetailDAO implements DAO<CommentDetail>{
 		return jdbcTemplate.queryForObject(sql, args, (rs, rowNum) -> {
 		final CommentDetail commentDetail = new CommentDetail();
 		commentDetail.setId(rs.getInt("ID"));
-		final Article article = new Article();
-		article.setId(rs.getInt("ARTICLE_ID"));
-		commentDetail.setArticle(article);
-		final User user = new User();
-		user.setId(rs.getInt("USER_ID"));
+		final Article a = new Article();
+		a.setId(rs.getInt("ARTICLE_ID"));
+		commentDetail.setArticle(a);
+		final User u = new User();
+		u.setId(rs.getInt("USER_ID"));
 		commentDetail.setComment(rs.getString("COMMENTS"));
 		return commentDetail;
 	});
