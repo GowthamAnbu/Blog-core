@@ -17,7 +17,7 @@ public class UserValidator {
 		ValidationUtil.isNotValid(name,"Invalid Name");
 	}
 	
-	private void validateUserName(String username)throws ValidationException{
+	public void validateUserName(String username)throws ValidationException{
 		ValidationUtil.isNotValid(username,"Invalid UserName");
 	}
 	
@@ -44,7 +44,7 @@ public class UserValidator {
 	
 	public void validateUpdate(User user) throws ValidationException{
 		validateUser(user);
-		validateId(user.getId());
+		validateName(user.getUserName());
 		validatePassword(user.getPassword());
 	}
 	

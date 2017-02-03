@@ -7,11 +7,13 @@ public class TestUserDAO {
 	public static void main(String[] args) {
 		
 		User user = new User();
-		user.setId(1);
-		user.setPassword("87654321");
-		
+//		user.setId(1);
+//		user.setPassword("87654321");
+		user.setUserName("Gow");
 		UserDAO userDAO = new UserDAO();
-		System.out.println(userDAO.update(user));
+		if (userDAO.getUserId(user.getUserName())==null){
+			System.out.println("null");
+		}
 	}
 
 }

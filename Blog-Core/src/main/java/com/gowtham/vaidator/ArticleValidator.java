@@ -28,8 +28,8 @@ public class ArticleValidator {
 		ValidationUtil.isNotValid(content,"Invalid Content");
 	}
 		
-	private void validateModifiedDate(LocalDateTime modifiedDate)throws ValidationException{
-		ValidationUtil.isNotValid(modifiedDate,"Invalid PublishedDate");
+	private void validateDate(LocalDateTime date)throws ValidationException{
+		ValidationUtil.isNotValid(date,"Invalid PublishedDate");
 	}
 
 	
@@ -43,7 +43,6 @@ public class ArticleValidator {
 	public void validateUpdate(Article article) throws ValidationException{
 		validateArticle(article);
 		validateId(article.getId());
-		validateModifiedDate(article.getModifiedDate());
 		validateContent(article.getContent());
 	}
 	

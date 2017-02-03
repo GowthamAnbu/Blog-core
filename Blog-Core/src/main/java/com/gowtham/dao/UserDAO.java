@@ -63,10 +63,22 @@ public class UserDAO implements DAO<User> {
 		});
 	}
 	
-	public Boolean isValid(String name){
-		String sql="SELECT ISVALID(?)";
+	public Boolean isValidUserName(String name){
+		String sql="SELECT ISVALID_USER_NAME(?)";
 		Object[] args={name};
 		return jdbcTemplate.queryForObject(sql,args, boolean.class);
 	}
-
+	
+	public Boolean isValidPassword(String name,String password){
+		String sql="SELECT ISVALID_PASSWORD(?,?)";
+		Object[] args={name,password};
+		return jdbcTemplate.queryForObject(sql,args, boolean.class);
+	}
+	
+	public  Integer getUserId(String userName){
+		String sql = "SELECT IFNULL((SELECT id FROM USERS WHERE USER_NAME=?),NULL)";
+		Object[] args={userName};
+		 return jdbcTemplate.queryForObject(sql,args, int.class);
+	}
+	
 }

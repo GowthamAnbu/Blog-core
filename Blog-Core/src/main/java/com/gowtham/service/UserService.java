@@ -15,7 +15,7 @@ public class UserService {
 	public int register(User user) throws ServiceException {
 		try {
 			userValidator.validateSave(user);
-			if (!userDAO.isValid(user.getUserName())) {
+			if (!userDAO.isValidUserName(user.getUserName())) {
 				throw new ServiceException("user name already exists");
 			}
 			return userDAO.save(user);
@@ -27,7 +27,7 @@ public class UserService {
 	public int update(User user) throws ServiceException {
 		try {
 			userValidator.validateUpdate(user);
-			if (userDAO.isValid(user.getUserName())) {
+			if (userDAO.isValidUserName(user.getUserName())) {
 				throw new ServiceException("user name doesn't exists");
 			}
 			return userDAO.update(user);
@@ -39,7 +39,7 @@ public class UserService {
 	public int delete(User user) throws ServiceException {
 		try {
 			userValidator.validateDelete(user);
-			if (userDAO.isValid(user.getUserName())) {
+			if (userDAO.isValidUserName(user.getUserName())) {
 				throw new ServiceException("user name doesn't exists");
 			}
 			return userDAO.delete(user.getId());
@@ -50,6 +50,21 @@ public class UserService {
 	
 	public List<User> findAll(){
 		return userDAO.findAll();
+	}
+	
+	public int login(User user) throws ServiceException {
+		try {
+			userValidator.validateUpdate(user);
+			if (userDAO.isValidUserName(user.getUserName())) {
+				throw new ServiceException("Invalid User Name");
+			}
+			else if(!userDAO.isValidPassword(user.getUserName(),user.getPassword())){
+				throw new ServiceException("Invalid Password");
+			}
+			return 1;
+		} catch (ValidationException e) {
+			throw new ServiceException("Unable to Login",e);
+		}
 	}
 	
 }
