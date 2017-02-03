@@ -41,5 +41,11 @@ public class CategoryDetailValidator {
 		validateId(categoryDetail.getId());
 	}
 	
+	public void validateUpdateCategory(CategoryDetail categoryDetail) throws ValidationException{
+		validateCategoryDetail(categoryDetail);
+		validateId(categoryDetail.getCategory().getId());
+		validateArticleId(categoryDetail.getArticle().getId());
+	}
+	
 }
 

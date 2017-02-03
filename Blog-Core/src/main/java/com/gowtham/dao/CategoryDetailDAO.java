@@ -67,4 +67,10 @@ public class CategoryDetailDAO implements DAO<CategoryDetail> {
 	});
 	}
 
+	public int updateCategory(CategoryDetail categoryDetail) {
+		String sql = "UPDATE CATEGORY_DETAILS SET CATEGORY_ID=? WHERE ARTICLE_ID=?";
+		Object[] args = {categoryDetail.getCategory().getId(),categoryDetail.getArticle().getId()};
+		return jdbcTemplate.update(sql, args);
+	}
+	
 }

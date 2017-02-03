@@ -1,5 +1,7 @@
 package com.gowtham.service;
 
+import com.gowtham.dao.ArticleDAO;
+import com.gowtham.dao.CategoryDAO;
 import com.gowtham.dao.CategoryDetailDAO;
 import com.gowtham.exception.ServiceException;
 import com.gowtham.exception.ValidationException;
@@ -9,6 +11,8 @@ import com.gowtham.vaidator.CategoryDetailValidator;
 public class CategoryDetailService {
 	final CategoryDetailValidator categoryDetailValidator = new CategoryDetailValidator();
 	final CategoryDetailDAO categoryDetailDAO = new CategoryDetailDAO();
+	final ArticleDAO articleDAO = new ArticleDAO();
+	final CategoryDAO categoryDAO = new CategoryDAO();
 	
 	public int save(CategoryDetail categoryDetail) throws ServiceException {
 		try {
@@ -39,6 +43,23 @@ public class CategoryDetailService {
 	
 	public void findAll() {
 		categoryDetailDAO.findAll();
+	}
+	
+	public int updateCategory(CategoryDetail categoryDetail) throws ServiceException {
+		try {
+			Integer articleId=articleDAO.getArticleId(categoryDetail.getArticle().getName());
+			Integer categoryId=categoryDAO.getCategoryId(categoryDetail.getCategory().getName());
+			if(articleId==null){
+				throw new ServiceException("invalid article name");
+			}
+			else if(categoryId==null){
+				throw new ServiceException("invalid category name");
+			}
+			categoryDetailValidator.validateUpdateCategory(categoryDetail);
+			return categoryDetailDAO.updateCategory(categoryDetail);
+		} catch (ValidationException e) {
+			throw new ServiceException("Unable to Update",e);
+		}
 	}
 	
 }

@@ -76,7 +76,7 @@ public class UserDAO implements DAO<User> {
 	}
 	
 	public  Integer getUserId(String userName){
-		String sql = "SELECT IFNULL((SELECT id FROM USERS WHERE USER_NAME=?),NULL)";
+		String sql = "SELECT IFNULL((SELECT ID FROM USERS WHERE USER_NAME=?),NULL)";
 		Object[] args={userName};
 		 return jdbcTemplate.queryForObject(sql,args, int.class);
 	}

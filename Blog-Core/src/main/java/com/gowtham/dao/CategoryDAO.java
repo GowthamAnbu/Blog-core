@@ -13,8 +13,8 @@ public class CategoryDAO implements DAO<Category>{
 
 	@Override
 	public int save(Category category) {
-		String sql="INSERT INTO CATEGORIES (ID,NAME,USER_ID) VALUES(?,?,?)";
-		Object[] args={category.getId(),category.getName(),category.getUser().getId()};
+		String sql="INSERT INTO CATEGORIES (NAME,USER_ID) VALUES(?,?)";
+		Object[] args={category.getName(),category.getUser().getId()};
 		return jdbcTemplate.update(sql, args);
 	}
 
@@ -60,5 +60,17 @@ public class CategoryDAO implements DAO<Category>{
 		return category;
 	});
 	}
-
+	
+	public  Integer getCategoryId(String categoryName){
+		String sql = "SELECT IFNULL((SELECT id FROM CATEGORIES WHERE NAME=?),NULL)";
+		Object[] args={categoryName};
+		 return jdbcTemplate.queryForObject(sql,args, int.class);
+	}
+	
+	public  boolean isPresent(Integer userId,String categoryName){
+		String sql = "SELECT IFNULL((SELECT ID FROM CATEGORIES WHERE USER_ID=? AND NAME=?),FALSE)";
+		Object[] args={userId,categoryName};
+		 return jdbcTemplate.queryForObject(sql,args, boolean.class);
+	}
+	
 }

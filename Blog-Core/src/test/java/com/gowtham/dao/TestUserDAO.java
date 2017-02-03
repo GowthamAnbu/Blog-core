@@ -9,11 +9,13 @@ public class TestUserDAO {
 		User user = new User();
 //		user.setId(1);
 //		user.setPassword("87654321");
-		user.setUserName("Gow");
+		user.setUserName("Gowtham");
 		UserDAO userDAO = new UserDAO();
 		if (userDAO.getUserId(user.getUserName())==null){
 			System.out.println("null");
 		}
+		else
+			System.out.println(userDAO.getUserId(user.getUserName()));
 	}
 
 }

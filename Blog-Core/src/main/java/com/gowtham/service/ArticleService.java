@@ -84,10 +84,9 @@ public class ArticleService {
 
 	public int updateArticle(Article article) throws ServiceException {
 		Integer userId = userDAO.getUserId(article.getUser().getUserName());
-		Integer articleId;
+		Integer articleId = articleDAO.getArticleId(article.getName());
 		try {
 			if (userService.login(article.getUser()) == 1) {
-				articleId = articleDAO.getArticleId(article.getName());
 				if (articleDAO.viewAllCheck(userId) == null) {
 					throw new ServiceException("No Articles found");
 				}
@@ -95,6 +94,7 @@ public class ArticleService {
 					throw new ServiceException("No Articles found for the name:" + article.getName());
 				} 
 				article.setId(articleId);
+				article.getUser().setId(userId);
 				articleValidator.validateUpdate(article);
 			}
 			return articleDAO.update(article);
@@ -106,10 +106,9 @@ public class ArticleService {
 
 	public int deleteArticle(Article article) throws ServiceException {
 		Integer userId = userDAO.getUserId(article.getUser().getUserName());
-		Integer articleId;
+		Integer articleId = articleDAO.getArticleId(article.getName());
 		try {
 			if (userService.login(article.getUser()) == 1) {
-				articleId = articleDAO.getArticleId(article.getName());
 				if (articleDAO.viewAllCheck(userId) == null) {
 					throw new ServiceException("No Articles found");
 				}
@@ -117,6 +116,7 @@ public class ArticleService {
 					throw new ServiceException("No Articles found for the name:" + article.getName());
 				} 
 				article.setId(articleId);
+				article.getUser().setId(userId);
 				articleValidator.validateDelete(article);
 			}
 			return articleDAO.delete(article.getId());
