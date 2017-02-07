@@ -10,7 +10,7 @@ public static void main(String[] args) throws ServiceException{
 	User user=new User();
 	user.setUserName("Gowtham");
 	Category category = new Category();
-	category.setName("c++");
+	category.setName("Html");
 	category.setUser(user);
 	CategoryService categoryService = new CategoryService();
 	categoryService.addCategory(category);

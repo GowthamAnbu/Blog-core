@@ -14,8 +14,8 @@ public class CategoryDetailDAO implements DAO<CategoryDetail> {
 
 	@Override
 	public int save(CategoryDetail categoryDetail) {
-		String sql = "INSERT INTO CATEGORY_DETAILS (ID,ARTICLE_ID,CATEGORY_ID) VALUES(?,?,?)";
-		Object[] args = { categoryDetail.getId(), categoryDetail.getArticle().getId(),
+		String sql = "INSERT INTO CATEGORY_DETAILS (ARTICLE_ID,CATEGORY_ID) VALUES(?,?,?)";
+		Object[] args = {categoryDetail.getArticle().getId(),
 				categoryDetail.getCategory().getId() };
 		return jdbcTemplate.update(sql, args);
 	}
@@ -70,6 +70,12 @@ public class CategoryDetailDAO implements DAO<CategoryDetail> {
 	public int updateCategory(CategoryDetail categoryDetail) {
 		String sql = "UPDATE CATEGORY_DETAILS SET CATEGORY_ID=? WHERE ARTICLE_ID=?";
 		Object[] args = {categoryDetail.getCategory().getId(),categoryDetail.getArticle().getId()};
+		return jdbcTemplate.update(sql, args);
+	}
+	
+	public Integer getArticleId(Integer id) {
+		String sql = "SELECT IFNULL((SELECT ARTICLE_ID FROM CATEGORY_DETAILS WHERE CATEGORY_ID=?),NULL)";
+		Object[] args = {id};
 		return jdbcTemplate.update(sql, args);
 	}
 	

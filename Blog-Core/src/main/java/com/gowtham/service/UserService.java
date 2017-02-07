@@ -6,7 +6,7 @@ import com.gowtham.dao.UserDAO;
 import com.gowtham.exception.ServiceException;
 import com.gowtham.exception.ValidationException;
 import com.gowtham.model.User;
-import com.gowtham.vaidator.UserValidator;
+import com.gowtham.validator.UserValidator;
 
 public class UserService {
 	private UserValidator userValidator = new UserValidator();
@@ -67,4 +67,11 @@ public class UserService {
 		}
 	}
 	
+	public Boolean isValidUser(String userName,String password){
+		UserDAO userDAO = new UserDAO();
+		if(userDAO.isValidPassword(userName, password)){
+			return true;
+		}
+		return false;
+	}
 }

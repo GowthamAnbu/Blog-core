@@ -1,4 +1,4 @@
-package com.gowtham.vaidator;
+package com.gowtham.validator;
 
 import com.gowtham.exception.ValidationException;
 import com.gowtham.model.CategoryDetail;

@@ -5,7 +5,7 @@ import com.gowtham.dao.UserDAO;
 import com.gowtham.exception.ServiceException;
 import com.gowtham.exception.ValidationException;
 import com.gowtham.model.Category;
-import com.gowtham.vaidator.CategoryValidator;
+import com.gowtham.validator.CategoryValidator;
 
 public class CategoryService {
 	final CategoryValidator categoryValidator = new CategoryValidator();

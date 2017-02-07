@@ -4,7 +4,7 @@ import com.gowtham.dao.RatingDetailDAO;
 import com.gowtham.exception.ServiceException;
 import com.gowtham.exception.ValidationException;
 import com.gowtham.model.RatingDetail;
-import com.gowtham.vaidator.RatingDetailValidator;
+import com.gowtham.validator.RatingDetailValidator;
 
 public class RatingDetailService {
 	final RatingDetailValidator ratingDetailValidator = new RatingDetailValidator();

@@ -1,4 +1,4 @@
-package com.gowtham.vaidator;
+package com.gowtham.validator;
 
 import java.time.LocalDateTime;
 

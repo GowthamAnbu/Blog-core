@@ -6,7 +6,7 @@ import com.gowtham.dao.CategoryDetailDAO;
 import com.gowtham.exception.ServiceException;
 import com.gowtham.exception.ValidationException;
 import com.gowtham.model.CategoryDetail;
-import com.gowtham.vaidator.CategoryDetailValidator;
+import com.gowtham.validator.CategoryDetailValidator;
 
 public class CategoryDetailService {
 	final CategoryDetailValidator categoryDetailValidator = new CategoryDetailValidator();
@@ -53,8 +53,10 @@ public class CategoryDetailService {
 				throw new ServiceException("invalid article name");
 			}
 			else if(categoryId==null){
-				throw new ServiceException("invalid category name");
+				throw new ServiceException("category doesn't exists");
 			}
+			categoryDetail.getArticle().setId(articleId);
+			categoryDetail.getCategory().setId(categoryId);
 			categoryDetailValidator.validateUpdateCategory(categoryDetail);
 			return categoryDetailDAO.updateCategory(categoryDetail);
 		} catch (ValidationException e) {

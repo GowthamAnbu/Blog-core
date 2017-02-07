@@ -91,9 +91,26 @@ public class ArticleDAO implements DAO<Article>{
 	}
 	
 	public  Integer getArticleId(String articleName){
-		String sql = "SELECT IFNULL((SELECT id FROM ARTICLES WHERE NAME=?),NULL)";
+		String sql = "SELECT IFNULL((SELECT ID FROM ARTICLES WHERE NAME=?),NULL)";
 		Object[] args={articleName};
 		 return jdbcTemplate.queryForObject(sql,args, int.class);
+	}
+	
+	public Article viewArticle(Integer id) {
+		String sql = "SELECT ID,USER_ID,NAME,CONTENT,PUBLISHED_DATE,MODIFIED_DATE FROM ARTICLES WHERE ID=?";
+		Object[] args={id};
+		return jdbcTemplate.queryForObject(sql,args,(rs, rowNum) -> {
+		final Article article =new Article();
+		article.setId(rs.getInt("ID"));
+		final User u=new User();
+		u.setId(rs.getInt("USER_ID"));
+		article.setUser(u);
+		article.setName(rs.getString("NAME"));
+		article.setContent(rs.getString("CONTENT"));
+		article.setPublishedDate(rs.getTimestamp("PUBLISHED_DATE").toLocalDateTime());
+		article.setModifiedDate(rs.getTimestamp("MODIFIED_DATE").toLocalDateTime());
+		return article;
+	});
 	}
 	
 }

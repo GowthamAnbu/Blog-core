@@ -4,7 +4,7 @@ import com.gowtham.dao.CommentDetailDAO;
 import com.gowtham.exception.ServiceException;
 import com.gowtham.exception.ValidationException;
 import com.gowtham.model.CommentDetail;
-import com.gowtham.vaidator.CommentDetailValidator;
+import com.gowtham.validator.CommentDetailValidator;
 
 public class CommentDetailService {
 	final CommentDetailValidator commentDetailValidator = new CommentDetailValidator();

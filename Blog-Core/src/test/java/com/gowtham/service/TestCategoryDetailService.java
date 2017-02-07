@@ -10,14 +10,13 @@ public class TestCategoryDetailService {
 public static void main(String[] args) throws ServiceException{
 	CategoryDetailService categoryDetailService = new CategoryDetailService();
 	CategoryDetail categoryDetail = new CategoryDetail();
-	Article article = new Article();
-	article.setName("MyFirst");
-	categoryDetail.setArticle(article);
 	Category category = new Category();
 	category.setName("c");
+	Article article = new Article();
+	article.setName("MyFirst");
 	categoryDetail.setCategory(category);
+	categoryDetail.setArticle(article);
 	categoryDetailService.updateCategory(categoryDetail);
-	
 }
 
 }
