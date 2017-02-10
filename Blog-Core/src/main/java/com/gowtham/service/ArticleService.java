@@ -73,8 +73,8 @@ public class ArticleService {
 		}
 	}
 
-	public int delete(Integer id){
-			return articleDAO.delete(id);
+	public void delete(Integer id){
+			articleDAO.delete(id);
 	}
 
 	public List<Article> findAll() {
@@ -93,6 +93,10 @@ public class ArticleService {
 		}
 	}
 
+	public List<Article> viewAllArticle() throws ServiceException {
+			return articleDAO.viewAll();
+	}
+	
 	public int updateArticle(Article article) throws ServiceException {
 		return articleDAO.update(article);
 	}
@@ -135,7 +139,7 @@ public class ArticleService {
 	
 	public int publishSave(Article article) throws ServiceException {
 		UserDAO userDAO = new UserDAO();
-		article.getUser().setId(userDAO.getUserId(article.getUser().getUserName()));
+//		article.getUser().setId(userDAO.getUserId(article.getUser().getUserName()));
 		try {
 			if(articleDAO.isPresent(article.getUser().getUserName(), article.getName())){
 				throw new ServiceException("title already exists");

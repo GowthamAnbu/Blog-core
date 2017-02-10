@@ -74,4 +74,9 @@ public class UserService {
 		}
 		return false;
 	}
+	
+	public User getUser(String userName) {
+		UserDAO userDAO = new UserDAO();
+		return userDAO.getUser(userName);
+	}
 }

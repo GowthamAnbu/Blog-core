@@ -1,5 +1,7 @@
 package com.gowtham.service;
 
+import java.util.List;
+
 import com.gowtham.dao.CategoryDAO;
 import com.gowtham.dao.UserDAO;
 import com.gowtham.exception.ServiceException;
@@ -57,5 +59,9 @@ public class CategoryService {
 				throw new ServiceException("unable to save",e);
 			}
 		}
+	
+	public List<Category> getCategory(Integer id){
+		return categoryDAO.listByUserId(id);
+	}
 	
 }

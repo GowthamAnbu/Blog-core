@@ -72,5 +72,24 @@ public class CategoryDAO implements DAO<Category>{
 		Object[] args={userId,categoryName};
 		 return jdbcTemplate.queryForObject(sql,args, boolean.class);
 	}
+
+	public List<String> getCategory(Integer id){
+		String sql="SELECT NAME FROM CATEGORIES WHERE USER_ID=?";
+		Object[] args={id};
+		List<String> queryForList = jdbcTemplate.queryForList(sql, args,String.class);
+		return queryForList;
+	}
+	
+
+	public List<Category> listByUserId(int userId) {
+		final String sql = "SELECT ID,NAME FROM CATEGORIES WHERE USER_ID=?";
+		Object[] params = { userId };
+		return jdbcTemplate.query(sql, params, (rs, rowNum) -> {
+			final Category category = new Category();
+			category.setId(rs.getInt("ID"));
+			category.setName(rs.getString("NAME"));
+			return category;
+		});
+	}
 	
 }
