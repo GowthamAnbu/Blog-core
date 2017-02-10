@@ -16,6 +16,10 @@ public class CategoryDetailService {
 	
 	public int save(CategoryDetail categoryDetail) throws ServiceException {
 		try {
+			ArticleDAO articleDAO = new ArticleDAO();
+			CategoryDAO categoryDAO = new CategoryDAO();
+			categoryDetail.getArticle().setId(articleDAO.getArticleId(categoryDetail.getArticle().getName()));
+			categoryDetail.getCategory().setId(categoryDAO.getCategoryId(categoryDetail.getCategory().getName()));
 			categoryDetailValidator.validateSave(categoryDetail);
 			return categoryDetailDAO.save(categoryDetail);
 		} catch (ValidationException e) {

@@ -1,5 +1,8 @@
 package com.gowtham.dao;
 
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -13,8 +16,13 @@ public class ArticleDAO implements DAO<Article>{
 
 	@Override
 	public int save(Article article) {
-		String sql="INSERT INTO ARTICLES(USER_ID,NAME,CONTENT) VALUES(?,?,?,?,?)";
-		Object[] args={article.getUser().getId(),article.getName(),article.getContent()};
+		String sql="INSERT INTO ARTICLES(USER_ID,NAME,CONTENT,MODIFIED_DATE) VALUES(?,?,?,?)";
+		Date date = new Date();
+		Timestamp timestamp = new Timestamp(date.getTime());
+		SimpleDateFormat noMilliSecondsFormatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		noMilliSecondsFormatter.format(timestamp);
+		article.setModifiedDate(timestamp.toLocalDateTime());
+		Object[] args={article.getUser().getId(),article.getName(),article.getContent(),article.getModifiedDate()};
 		return jdbcTemplate.update(sql, args);
 	}
 
@@ -67,10 +75,10 @@ public class ArticleDAO implements DAO<Article>{
 	});
 	}
 	
-	public Article viewAll(Integer id) {
+	public List<Article> viewAll(Integer id) {
 		String sql = "SELECT ID,USER_ID,NAME,CONTENT,PUBLISHED_DATE,MODIFIED_DATE FROM ARTICLES WHERE USER_ID=?";
 		Object[] args={id};
-		return jdbcTemplate.queryForObject(sql,args,(rs, rowNum) -> {
+		return jdbcTemplate.query(sql,args,(rs, rowNum) -> {
 		final Article article =new Article();
 		article.setId(rs.getInt("ID"));
 		final User u=new User();
@@ -111,6 +119,21 @@ public class ArticleDAO implements DAO<Article>{
 		article.setModifiedDate(rs.getTimestamp("MODIFIED_DATE").toLocalDateTime());
 		return article;
 	});
+	}
+	
+
+	public int updateArticle(Article article) {
+		String sql="UPDATE ARTICLES SET TITLE=? , CONTENT=? WHERE ID=?";
+		Object[] args={article.getName(),article.getContent(),article.getId()};
+		return jdbcTemplate.update(sql, args);
+	}
+	
+	public Boolean isPresent(String userName,String articleName){
+		UserDAO userDAO = new UserDAO();
+		final Integer userId=userDAO.getUserId(userName);
+		final String sql="SELECT IFNULL((select TRUE FROM ARTICLES WHERE NAME=? AND USER_ID=?),FALSE)";
+		Object[] args={articleName,userId};
+		 return  jdbcTemplate.queryForObject(sql, args,boolean.class);
 	}
 	
 }

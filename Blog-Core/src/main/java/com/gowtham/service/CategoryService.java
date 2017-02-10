@@ -14,6 +14,8 @@ public class CategoryService {
 	
 	public int save(Category category) throws ServiceException {
 		try {
+			CategoryDAO categoryDAO = new CategoryDAO();
+			category.getUser().setId(userDAO.getUserId(category.getUser().getUserName()));
 			categoryValidator.validateSave(category);
 			return categoryDAO.save(category);
 		} catch (ValidationException e) {
@@ -44,20 +46,16 @@ public class CategoryService {
 	}
 
 	public int addCategory(Category category) throws ServiceException {
-		try {
-			Integer userId=userDAO.getUserId(category.getUser().getUserName());
-			if(userId==null){
-				throw new ServiceException("Invalid User");
+			try {
+				category.getUser().setId(userDAO.getUserId(category.getUser().getUserName()));
+				categoryValidator.validateSave(category);
+				if(categoryDAO.isPresent(category.getUser().getId(), category.getName())){
+					throw new ServiceException("category already exists");
+				}
+				return categoryDAO.save(category);
+			} catch (ValidationException e) {
+				throw new ServiceException("unable to save",e);
 			}
-			else if(categoryDAO.isPresent(userId,category.getName())){
-				throw new ServiceException("Category Exists Already");
-			}
-			category.getUser().setId(userId);
-			categoryValidator.validateSave(category);
-			return categoryDAO.save(category);
-		} catch (ValidationException e) {
-			throw new ServiceException("Unable to Save",e);
 		}
-	}
 	
 }

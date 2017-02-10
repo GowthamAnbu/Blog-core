@@ -14,7 +14,7 @@ public class CategoryDetailDAO implements DAO<CategoryDetail> {
 
 	@Override
 	public int save(CategoryDetail categoryDetail) {
-		String sql = "INSERT INTO CATEGORY_DETAILS (ARTICLE_ID,CATEGORY_ID) VALUES(?,?,?)";
+		String sql = "INSERT INTO CATEGORY_DETAILS (ARTICLE_ID,CATEGORY_ID) VALUES(?,?)";
 		Object[] args = {categoryDetail.getArticle().getId(),
 				categoryDetail.getCategory().getId() };
 		return jdbcTemplate.update(sql, args);

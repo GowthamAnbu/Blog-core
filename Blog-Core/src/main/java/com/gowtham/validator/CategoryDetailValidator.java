@@ -25,7 +25,6 @@ public class CategoryDetailValidator {
 	
 	public void validateSave(CategoryDetail categoryDetail) throws ValidationException{
 		validateCategoryDetail(categoryDetail);
-		validateId(categoryDetail.getId());
 		validateArticleId(categoryDetail.getArticle().getId());
 		validateCategoryId(categoryDetail.getCategory().getId());
 	}

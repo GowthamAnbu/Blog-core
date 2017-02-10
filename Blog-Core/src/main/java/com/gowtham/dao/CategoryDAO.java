@@ -68,7 +68,7 @@ public class CategoryDAO implements DAO<Category>{
 	}
 	
 	public  boolean isPresent(Integer userId,String categoryName){
-		String sql = "SELECT IFNULL((SELECT ID FROM CATEGORIES WHERE USER_ID=? AND NAME=?),FALSE)";
+		String sql = "SELECT IFNULL((SELECT TRUE FROM CATEGORIES WHERE USER_ID=? AND NAME=?),FALSE)";
 		Object[] args={userId,categoryName};
 		 return jdbcTemplate.queryForObject(sql,args, boolean.class);
 	}

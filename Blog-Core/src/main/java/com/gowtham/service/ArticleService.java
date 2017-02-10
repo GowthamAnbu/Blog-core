@@ -73,28 +73,20 @@ public class ArticleService {
 		}
 	}
 
-	public int delete(Article article) throws ServiceException {
-		try {
-			articleValidator.validateDelete(article);
-			return articleDAO.delete(article.getId());
-		} catch (ValidationException e) {
-			throw new ServiceException("Unable to delete", e);
-		}
+	public int delete(Integer id){
+			return articleDAO.delete(id);
 	}
 
 	public List<Article> findAll() {
 		return articleDAO.findAll();
 	}
 
-	public Article viewAllArticle(User user) throws ServiceException {
-		Integer userId = userDAO.getUserId(user.getUserName());
+	public List<Article> viewAllArticle(User user) throws ServiceException {
 		try {
-			if (userService.login(user) == 1) {
-				if (articleDAO.viewAllCheck(userId) == null) {
-					throw new ServiceException("No Articles found");
-				} 
+			if(user.getId()==null){
+				throw new ServiceException("Invalid User Name");
 			}
-			return articleDAO.viewAll(userId);
+			return articleDAO.viewAll(user.getId());
 		}
 		catch (ServiceException e) {
 			throw new ServiceException("Unable to View", e);
@@ -102,25 +94,7 @@ public class ArticleService {
 	}
 
 	public int updateArticle(Article article) throws ServiceException {
-		Integer userId = userDAO.getUserId(article.getUser().getUserName());
-		Integer articleId = articleDAO.getArticleId(article.getName());
-		try {
-			if (userService.login(article.getUser()) == 1) {
-				if (articleDAO.viewAllCheck(userId) == null) {
-					throw new ServiceException("No Articles found");
-				}
-				else if (articleId == null) {
-					throw new ServiceException("No Articles found for the name:" + article.getName());
-				} 
-				article.setId(articleId);
-				article.getUser().setId(userId);
-				articleValidator.validateUpdate(article);
-			}
-			return articleDAO.update(article);
-		}
-		catch (ValidationException e) {
-			throw new ServiceException("Unable to Update", e);
-		}
+		return articleDAO.update(article);
 	}
 
 	public int deleteArticle(Article article) throws ServiceException {
@@ -158,5 +132,20 @@ public class ArticleService {
 		}
 		return 0;
 	}
+	
+	public int publishSave(Article article) throws ServiceException {
+		UserDAO userDAO = new UserDAO();
+		article.getUser().setId(userDAO.getUserId(article.getUser().getUserName()));
+		try {
+			if(articleDAO.isPresent(article.getUser().getUserName(), article.getName())){
+				throw new ServiceException("title already exists");
+			}
+			articleValidator.validateSave(article);
+			return articleDAO.save(article);
+		} catch (ValidationException e) {
+			throw new ServiceException("Unable to save", e);
+		}
+	}
+	
 	
 }

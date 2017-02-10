@@ -1,7 +1,5 @@
 package com.gowtham.validator;
 
-import java.time.LocalDateTime;
-
 import com.gowtham.exception.ValidationException;
 import com.gowtham.model.Article;
 import com.gowtham.util.ValidationUtil;
@@ -28,9 +26,9 @@ public class ArticleValidator {
 		ValidationUtil.isNotValid(content,"Invalid Content");
 	}
 		
-	private void validateDate(LocalDateTime date)throws ValidationException{
+	/*private void validateDate(LocalDateTime date)throws ValidationException{
 		ValidationUtil.isNotValid(date,"Invalid PublishedDate");
-	}
+	}*/
 
 	
 	public void validateSave(Article article) throws ValidationException{
