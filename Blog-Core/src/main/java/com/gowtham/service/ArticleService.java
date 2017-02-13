@@ -138,8 +138,6 @@ public class ArticleService {
 	}
 	
 	public int publishSave(Article article) throws ServiceException {
-		UserDAO userDAO = new UserDAO();
-//		article.getUser().setId(userDAO.getUserId(article.getUser().getUserName()));
 		try {
 			if(articleDAO.isPresent(article.getUser().getUserName(), article.getName())){
 				throw new ServiceException("title already exists");
