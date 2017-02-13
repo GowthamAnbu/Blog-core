@@ -79,4 +79,20 @@ public class UserService {
 		UserDAO userDAO = new UserDAO();
 		return userDAO.getUser(userName);
 	}
+	
+	public Integer getRole(Integer id){
+		UserDAO userDAO = new UserDAO();
+		return userDAO.getRole(id);
+	}
+	
+	public List<User> forAdmin(){
+		UserDAO userDAO = new UserDAO();
+		return userDAO.forAdmin();
+	}
+	
+	public void change(Integer id,Integer roleId){
+		final UserDAO userDAO = new UserDAO();
+		userDAO.change(id, roleId);
+	}
+	
 }

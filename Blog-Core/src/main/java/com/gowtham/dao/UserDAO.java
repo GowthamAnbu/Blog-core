@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.jdbc.core.JdbcTemplate;
 
+import com.gowtham.model.Role;
 import com.gowtham.model.User;
 import com.gowtham.util.ConnectionUtil;
 
@@ -100,6 +101,34 @@ public class UserDAO implements DAO<User> {
 			user.setPhoneNumber(rs.getString("PHONE_NUMBER"));
 			return user;
 		});
+	}
+	
+	public Integer getRole(Integer id){
+		String sql="SELECT ROLE_ID FROM USERS WHERE ID=?";
+		Object[] args={id};
+		return jdbcTemplate.queryForObject(sql,args,Integer.class);
+	}
+	
+	public List<User> forAdmin(){
+		String sql = "SELECT ID,NAME,USER_NAME,ROLE_ID,EMAIL_ID,PHONE_NUMBER FROM USERS WHERE ROLE_ID<>1";
+		return jdbcTemplate.query(sql, (rs, rowNum) -> {
+			final User user = new User();
+			user.setId(rs.getInt("ID"));
+			user.setName(rs.getString("NAME"));
+			final Role role = new Role();
+			role.setId(rs.getInt("ROLE_ID"));
+			user.setRole(role);
+			user.setUserName(rs.getString("USER_NAME"));
+			user.setEmailId(rs.getString("EMAIL_ID"));
+			user.setPhoneNumber(rs.getString("PHONE_NUMBER"));
+			return user;
+		});
+	}
+	
+	public void change(Integer id,Integer roleId){
+		String sql="UPDATE USERS SET ROLE_ID = ? WHERE ID=?";
+		Object[] args={roleId,id};
+		jdbcTemplate.update(sql,args);
 	}
 	
 }

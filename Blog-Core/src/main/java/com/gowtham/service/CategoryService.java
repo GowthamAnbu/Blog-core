@@ -6,6 +6,7 @@ import com.gowtham.dao.CategoryDAO;
 import com.gowtham.dao.UserDAO;
 import com.gowtham.exception.ServiceException;
 import com.gowtham.exception.ValidationException;
+import com.gowtham.model.Article;
 import com.gowtham.model.Category;
 import com.gowtham.validator.CategoryValidator;
 
@@ -62,6 +63,11 @@ public class CategoryService {
 	
 	public List<Category> getCategory(Integer id){
 		return categoryDAO.listByUserId(id);
+	}
+	
+	public List<Article> listByCategory(String categoryName) {
+		CategoryDAO categoryDAO = new CategoryDAO();
+		return categoryDAO.listByCategory(categoryName); 	
 	}
 	
 }

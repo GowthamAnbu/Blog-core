@@ -18,6 +18,6 @@ public class TestUserDAO {
 		else
 			System.out.println(userDAO.getUserId(user.getUserName()));
 	}*/
-		System.out.println(userDAO.getUserId(user.getUserName()));
+		System.out.println(userDAO.forAdmin());
 }
 }
