@@ -1,5 +1,7 @@
 package com.gowtham.service;
 
+import java.util.List;
+
 import com.gowtham.dao.CommentDetailDAO;
 import com.gowtham.exception.ServiceException;
 import com.gowtham.exception.ValidationException;
@@ -39,6 +41,11 @@ public class CommentDetailService {
 	
 	public void findAll() {
 		commentDetailDAO.findAll();
+	}
+	
+	public List<CommentDetail> getComments(Integer articleId,Integer userId){
+		CommentDetailDAO commentDetailDAO= new CommentDetailDAO();
+		return commentDetailDAO.getComments(articleId, userId);
 	}
 	
 }

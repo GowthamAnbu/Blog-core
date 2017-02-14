@@ -28,7 +28,6 @@ public class CommentDetailValidator {
 	
 	public void validateSave(CommentDetail commentDetail) throws ValidationException{
 		validateCommentDetail(commentDetail);
-		validateId(commentDetail.getId());
 		validateArticleId(commentDetail.getArticle().getId());
 		validateUserId(commentDetail.getUser().getId());
 		validateComment(commentDetail.getComment());

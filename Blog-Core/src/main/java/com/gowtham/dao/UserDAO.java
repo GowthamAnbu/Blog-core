@@ -130,5 +130,13 @@ public class UserDAO implements DAO<User> {
 		Object[] args={roleId,id};
 		jdbcTemplate.update(sql,args);
 	}
+
+
+	
+	public String getEmailId(Integer userId){
+		String sql = "SELECT EMAIL_ID FROM USERS WHERE ID=?";
+		Object[] args = { userId };
+		return jdbcTemplate.queryForObject(sql, args,String.class);
+	}
 	
 }

@@ -165,4 +165,10 @@ public class ArticleDAO implements DAO<Article> {
 		return jdbcTemplate.queryForObject(sql, args, boolean.class);
 	}
 	
+	public Integer getUserId(Integer articleId){
+		String sql="SELECT USER_ID FROM ARTICLES WHERE ARTICLE_ID=?";
+		Object[] args={articleId};
+		return jdbcTemplate.queryForObject(sql, args,Integer.class);
+	}
+	
 }

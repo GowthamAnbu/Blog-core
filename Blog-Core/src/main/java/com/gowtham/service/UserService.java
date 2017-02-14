@@ -95,4 +95,8 @@ public class UserService {
 		userDAO.change(id, roleId);
 	}
 	
+	public String getEmailId(Integer userId){
+		UserDAO userDAO = new UserDAO();
+		return userDAO.getEmailId(userId);
+	}
 }

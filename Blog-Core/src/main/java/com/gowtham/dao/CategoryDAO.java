@@ -93,10 +93,11 @@ public class CategoryDAO implements DAO<Category> {
 	}
 
 	public List<Article> listByCategory(String categoryName) {
-		final String sql = "SELECT NAME,CONTENT,PUBLISHED_DATE,MODIFIED_DATE FROM ARTICLES WHERE ID IN (SELECT ARTICLE_ID FROM CATEGORY_DETAILS WHERE CATEGORY_ID IN(SELECT ID FROM CATEGORIES WHERE NAME=?));";
+		final String sql = "SELECT ID,NAME,CONTENT,PUBLISHED_DATE,MODIFIED_DATE FROM ARTICLES WHERE ID IN (SELECT ARTICLE_ID FROM CATEGORY_DETAILS WHERE CATEGORY_ID IN(SELECT ID FROM CATEGORIES WHERE NAME=?));";
 		Object[] args={categoryName};
 		return jdbcTemplate.query(sql,args,(rs,rowNum)->{
 			final Article article=new Article();
+			article.setId(rs.getInt("ID"));
 			article.setName(rs.getString("NAME"));
 			article.setContent(rs.getString("CONTENT"));
 			article.setPublishedDate(rs.getTimestamp("PUBLISHED_DATE").toLocalDateTime());

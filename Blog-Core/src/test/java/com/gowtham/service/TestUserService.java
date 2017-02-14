@@ -13,7 +13,8 @@ public static void main(String[] args) throws ServiceException{
 	user.setPhoneNumber("123456789");
 	
 	final UserService userService = new UserService();
-	System.out.println(userService.register(user));
+//	System.out.println(userService.register(user));
 //	System.out.println(userService.login(user));
+	System.out.println(userService.getUser("Gowtham"));
 }
 }

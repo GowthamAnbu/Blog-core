@@ -26,4 +26,18 @@ public class MailUtil {
 		email.setStartTLSEnabled(true);
 		email.send();
 }
+	public static void sendSimpleMail(User user,User author) throws EmailException {
+		Email email = new SimpleEmail();
+		email.setSmtpPort(465);
+		email.setAuthenticator(new DefaultAuthenticator("ticketmanagement.tms@gmail.com", "ticket123"));
+		email.setDebug(true);
+		email.setHostName("smtp.gmail.com");
+		email.setSSLOnConnect(true);
+		email.setFrom("ticketmanagement.tms@gmail.com");
+		email.setSubject("COMMENT DETAILS");
+		email.setMsg("Dear"+ author.getName() +","+user.getName()+"has commented on your article");
+		email.addTo(author.getEmailId());
+		email.setStartTLSEnabled(true);
+		email.send();
+}
 }

@@ -149,5 +149,8 @@ public class ArticleService {
 		}
 	}
 	
-	
+	public Integer getUserId(Integer articleId){
+		ArticleDAO articleDAO = new ArticleDAO();
+		return articleDAO.getUserId(articleId);
+	}
 }

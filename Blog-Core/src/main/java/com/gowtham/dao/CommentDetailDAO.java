@@ -13,22 +13,22 @@ public class CommentDetailDAO implements DAO<CommentDetail>{
 	private JdbcTemplate jdbcTemplate = ConnectionUtil.getJdbcTemplate();
 	@Override
 	public int save(CommentDetail commentDetail) {
-		String sql = "INSERT INTO COMMENTS_DETAIL (ID,ARTICLE_ID,USER_ID,COMMENTS) VALUES(?,?,?,?)";
-		Object[] args = { commentDetail.getId(), commentDetail.getArticle().getId(),
+		String sql = "INSERT INTO COMMENTS_DETAILS (ARTICLE_ID,USER_ID,COMMENTS) VALUES(?,?,?)";
+		Object[] args = {commentDetail.getArticle().getId(),
 				commentDetail.getUser().getId(),commentDetail.getComment() };
 		return jdbcTemplate.update(sql, args);
 	}
 
 	@Override
 	public int update(CommentDetail commentDetail) {
-		String sql = "UPDATE COMMENTS_DETAIL SET ARTICLE_ID=? WHERE ID=?";
+		String sql = "UPDATE COMMENTS_DETAILS SET ARTICLE_ID=? WHERE ID=?";
 		Object[] args = {commentDetail.getArticle().getId(),commentDetail.getId() };
 		return jdbcTemplate.update(sql, args);
 	}
 
 	@Override
 	public int delete(Integer id) {
-		String sql = "DELETE FROM COMMENTS_DETAIL WHERE ID=?";
+		String sql = "DELETE FROM COMMENTS_DETAILS WHERE ID=?";
 		Object[] args = {id};
 		return jdbcTemplate.update(sql, args);
 	}
@@ -66,4 +66,14 @@ public class CommentDetailDAO implements DAO<CommentDetail>{
 	});
 	}
 
+	public List<CommentDetail> getComments(Integer articleId,Integer userId){
+		String sql = "SELECT COMMENTS FROM  COMMENTS_DETAILS  WHERE ARTICLE_ID=? AND USER_ID=?";
+		Object[] args={articleId,userId};
+		return jdbcTemplate.query(sql, args, (rs, rowNum) -> {
+			final CommentDetail commentDetail = new CommentDetail();
+			commentDetail.setComment(rs.getString("COMMENTS"));
+			return commentDetail;
+		});
+	}
+	
 }
