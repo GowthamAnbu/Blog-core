@@ -7,7 +7,6 @@ public class TestCommentDetail {
 public static void main(String[] args) {
 	CommentDetailDAO commentDetailDAO = new CommentDetailDAO();
 	System.out.println(commentDetailDAO.getComments(25, 12));
-//	System.out.println(commentDetailService.getComments(25, 12));
 }
 
 }
