@@ -12,13 +12,13 @@ import com.gowtham.model.User;
 public class TestArticleService {
 public static void main(String[] args)throws ServiceException {
 	User user = new User();
-	user.setUserName("Gowtham");
+	ArticleService articleService = new ArticleService();
+/*	user.setUserName("Gowtham");
 	user.setPassword("thisis");
 	Article article = new Article();
 	article.setName("newtest");
 	article.setContent("content");
 	article.setUser(user);
-	ArticleService articleService = new ArticleService();
 	ArticleDAO articleDAO = new ArticleDAO();
 	List<Article> articleList=articleService.viewAllArticle(user);
 	ListIterator<Article> articleIterator=articleList.listIterator();
@@ -33,6 +33,8 @@ public static void main(String[] args)throws ServiceException {
 	Timestamp timestamp = Timestamp.valueOf(LocalDateTime.now());
 	System.out.println(timestamp);
 	System.out.println(articleDAO.isPresent(article.getUser().getUserName(), article.getName()));
-	System.out.println(articleService.publishSave(article));
+	System.out.println(articleService.publishSave(article));*/
+	user.setId(12);
+	System.out.println(articleService.viewAllArticle(user));
 }
 }

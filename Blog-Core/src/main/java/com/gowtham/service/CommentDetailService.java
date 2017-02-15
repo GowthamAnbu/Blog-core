@@ -43,9 +43,9 @@ public class CommentDetailService {
 		commentDetailDAO.findAll();
 	}
 	
-	public List<CommentDetail> getComments(Integer articleId,Integer userId){
+	public List<CommentDetail> getComments(Integer articleId){
 		CommentDetailDAO commentDetailDAO= new CommentDetailDAO();
-		return commentDetailDAO.getComments(articleId, userId);
+		return commentDetailDAO.getComments(articleId);
 	}
 	
 }

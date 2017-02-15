@@ -89,9 +89,9 @@ public class ArticleDAO implements DAO<Article> {
 		});
 	}
 
-	public List<Article> viewAll(Integer id) {
+	public List<Article> viewAll(User user) {
 		String sql = "SELECT ID,USER_ID,NAME,CONTENT,PUBLISHED_DATE,MODIFIED_DATE FROM ARTICLES WHERE USER_ID=?";
-		Object[] args = { id };
+		Object[] args = { user.getId() };
 		return jdbcTemplate.query(sql, args, (rs, rowNum) -> {
 			final Article article = new Article();
 			article.setId(rs.getInt("ID"));

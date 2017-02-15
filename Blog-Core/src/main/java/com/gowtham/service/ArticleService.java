@@ -86,7 +86,7 @@ public class ArticleService {
 			if(user.getId()==null){
 				throw new ServiceException("Invalid User Name");
 			}
-			return articleDAO.viewAll(user.getId());
+			return articleDAO.viewAll(user);
 		}
 		catch (ServiceException e) {
 			throw new ServiceException("Unable to View", e);

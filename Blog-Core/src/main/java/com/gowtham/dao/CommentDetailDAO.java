@@ -66,9 +66,9 @@ public class CommentDetailDAO implements DAO<CommentDetail>{
 	});
 	}
 
-	public List<CommentDetail> getComments(Integer articleId,Integer userId){
-		String sql = "SELECT COMMENTS FROM  COMMENTS_DETAILS  WHERE ARTICLE_ID=? AND USER_ID=?";
-		Object[] args={articleId,userId};
+	public List<CommentDetail> getComments(Integer articleId){
+		String sql = "SELECT COMMENTS FROM  COMMENTS_DETAILS  WHERE ARTICLE_ID=?";
+		Object[] args={articleId};
 		return jdbcTemplate.query(sql, args, (rs, rowNum) -> {
 			final CommentDetail commentDetail = new CommentDetail();
 			commentDetail.setComment(rs.getString("COMMENTS"));

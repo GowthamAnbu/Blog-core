@@ -21,7 +21,7 @@ public class MailUtil {
 		email.setSSLOnConnect(true);
 		email.setFrom("ticketmanagement.tms@gmail.com");
 		email.setSubject("REGISTRATION");
-		email.setMsg("Dear"+ user.getName() +"you have successfully registered");
+		email.setMsg("Dear "+ user.getName()+"," +" you have successfully registered");
 		email.addTo(user.getEmailId());
 		email.setStartTLSEnabled(true);
 		email.send();

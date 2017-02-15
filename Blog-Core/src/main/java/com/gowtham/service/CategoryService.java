@@ -50,7 +50,6 @@ public class CategoryService {
 
 	public int addCategory(Category category) throws ServiceException {
 			try {
-				category.getUser().setId(userDAO.getUserId(category.getUser().getUserName()));
 				categoryValidator.validateSave(category);
 				if(categoryDAO.isPresent(category.getUser().getId(), category.getName())){
 					throw new ServiceException("category already exists");
