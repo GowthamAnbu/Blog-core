@@ -5,9 +5,13 @@ import java.util.List;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.gowtham.dao.ArticleDAO;
+import com.gowtham.dao.ArticleDAOInterface;
 import com.gowtham.dao.CategoryDAO;
+import com.gowtham.dao.CategoryDAOInterface;
 import com.gowtham.dao.CategoryDetailDAO;
+import com.gowtham.dao.CategoryDetailDAOInterface;
 import com.gowtham.dao.UserDAO;
+import com.gowtham.dao.UserDAOInterface;
 import com.gowtham.exception.ServiceException;
 import com.gowtham.exception.ValidationException;
 import com.gowtham.model.Article;
@@ -19,14 +23,14 @@ import com.gowtham.validator.UserValidator;
 
 public class ArticleService {
 	final ArticleValidator articleValidator = new ArticleValidator();
-	final ArticleDAO articleDAO = new ArticleDAO();
+	final ArticleDAOInterface articleDAO = new ArticleDAO();
 	final CategoryService categoryService = new CategoryService();
 	final CategoryDetailService categoryDetailService = new CategoryDetailService();
 	final UserService userService = new UserService();
 	final UserValidator userValidator = new UserValidator();
-	final UserDAO userDAO = new UserDAO();
-	final CategoryDAO categoryDAO = new CategoryDAO();
-	final CategoryDetailDAO categoryDetailDAO = new CategoryDetailDAO();
+	final UserDAOInterface userDAO = new UserDAO();
+	final CategoryDAOInterface categoryDAO = new CategoryDAO();
+	final CategoryDetailDAOInterface categoryDetailDAO = new CategoryDetailDAO();
 	final CategoryDetail categoryDetail = new CategoryDetail();
 
 	@Transactional
@@ -150,7 +154,7 @@ public class ArticleService {
 	}
 	
 	public Integer getUserId(Integer articleId){
-		ArticleDAO articleDAO = new ArticleDAO();
+		ArticleDAOInterface articleDAO = new ArticleDAO();
 		return articleDAO.getUserId(articleId);
 	}
 }

@@ -1,8 +1,11 @@
 package com.gowtham.service;
 
 import com.gowtham.dao.ArticleDAO;
+import com.gowtham.dao.ArticleDAOInterface;
 import com.gowtham.dao.CategoryDAO;
+import com.gowtham.dao.CategoryDAOInterface;
 import com.gowtham.dao.CategoryDetailDAO;
+import com.gowtham.dao.CategoryDetailDAOInterface;
 import com.gowtham.exception.ServiceException;
 import com.gowtham.exception.ValidationException;
 import com.gowtham.model.CategoryDetail;
@@ -10,14 +13,14 @@ import com.gowtham.validator.CategoryDetailValidator;
 
 public class CategoryDetailService {
 	final CategoryDetailValidator categoryDetailValidator = new CategoryDetailValidator();
-	final CategoryDetailDAO categoryDetailDAO = new CategoryDetailDAO();
-	final ArticleDAO articleDAO = new ArticleDAO();
-	final CategoryDAO categoryDAO = new CategoryDAO();
+	final CategoryDetailDAOInterface categoryDetailDAO = new CategoryDetailDAO();
+	final ArticleDAOInterface articleDAO = new ArticleDAO();
+	final CategoryDAOInterface categoryDAO = new CategoryDAO();
 	
 	public int save(CategoryDetail categoryDetail) throws ServiceException {
 		try {
-			ArticleDAO articleDAO = new ArticleDAO();
-			CategoryDAO categoryDAO = new CategoryDAO();
+			ArticleDAOInterface articleDAO = new ArticleDAO();
+			CategoryDAOInterface categoryDAO = new CategoryDAO();
 			categoryDetail.getArticle().setId(articleDAO.getArticleId(categoryDetail.getArticle().getName()));
 			categoryDetail.getCategory().setId(categoryDAO.getCategoryId(categoryDetail.getCategory().getName()));
 			categoryDetailValidator.validateSave(categoryDetail);

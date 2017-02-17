@@ -17,9 +17,14 @@ import com.gowtham.model.Article;
 import com.gowtham.model.User;
 import com.gowtham.util.ConnectionUtil;
 
-public class ArticleDAO implements DAO<Article> {
+public class ArticleDAO implements ArticleDAOInterface {
 	private JdbcTemplate jdbcTemplate = ConnectionUtil.getJdbcTemplate();
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.gowtham.dao.ArticleDAOInterface#save(com.gowtham.model.Article)
+	 */
 	@Override
 	public int save(Article article) {
 		String sql = "INSERT INTO ARTICLES(USER_ID,NAME,CONTENT,MODIFIED_DATE) VALUES(?,?,?,?)";
@@ -33,6 +38,12 @@ public class ArticleDAO implements DAO<Article> {
 		return jdbcTemplate.update(sql, args);
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.gowtham.dao.ArticleDAOInterface#update(com.gowtham.model.Article)
+	 */
 	@Override
 	public int update(Article article) {
 		String sql = "UPDATE ARTICLES SET CONTENT=?,NAME=? WHERE ID=?";
@@ -40,20 +51,29 @@ public class ArticleDAO implements DAO<Article> {
 		return jdbcTemplate.update(sql, args);
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.gowtham.dao.ArticleDAOInterface#delete(java.lang.Integer)
+	 */
 	@Override
 	public int delete(Integer id) {
 		SimpleJdbcCall call = new SimpleJdbcCall(jdbcTemplate);
 		call.withProcedureName("DELETE_ARTICLE");
-		call.declareParameters(new SqlParameter("lid", Types.INTEGER),
-				new SqlOutParameter("result", Types.INTEGER));
+		call.declareParameters(new SqlParameter("lid", Types.INTEGER), new SqlOutParameter("result", Types.INTEGER));
 		call.setAccessCallParameterMetaData(false);
 		MapSqlParameterSource in = new MapSqlParameterSource();
 		in.addValue("lid", id);
 		Map<String, Object> execute = call.execute(in);
 		return (int) execute.get("result");
-		 
+
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.gowtham.dao.ArticleDAOInterface#findAll()
+	 */
 	@Override
 	public List<Article> findAll() {
 		String sql = "SELECT ID,USER_ID,NAME,CONTENT,PUBLISHED_DATE,MODIFIED_DATE FROM ARTICLES";
@@ -71,6 +91,11 @@ public class ArticleDAO implements DAO<Article> {
 		});
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.gowtham.dao.ArticleDAOInterface#findOne(java.lang.Integer)
+	 */
 	@Override
 	public Article findOne(Integer id) {
 		String sql = "SELECT ID,USER_ID,NAME,CONTENT,PUBLISHED_DATE,MODIFIED_DATE FROM ARTICLES WHERE ID=?";
@@ -89,6 +114,12 @@ public class ArticleDAO implements DAO<Article> {
 		});
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.gowtham.dao.ArticleDAOInterface#viewAll(com.gowtham.model.User)
+	 */
+	@Override
 	public List<Article> viewAll(User user) {
 		String sql = "SELECT ID,USER_ID,NAME,CONTENT,PUBLISHED_DATE,MODIFIED_DATE FROM ARTICLES WHERE USER_ID=?";
 		Object[] args = { user.getId() };
@@ -106,6 +137,12 @@ public class ArticleDAO implements DAO<Article> {
 		});
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.gowtham.dao.ArticleDAOInterface#viewAll()
+	 */
+	@Override
 	public List<Article> viewAll() {
 		String sql = "SELECT ID,USER_ID,NAME,CONTENT,PUBLISHED_DATE,MODIFIED_DATE FROM ARTICLES";
 		return jdbcTemplate.query(sql, (rs, rowNum) -> {
@@ -122,18 +159,36 @@ public class ArticleDAO implements DAO<Article> {
 		});
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.gowtham.dao.ArticleDAOInterface#viewAllCheck(java.lang.Integer)
+	 */
+	@Override
 	public Integer viewAllCheck(Integer userId) {
 		String sql = "SELECT IFNULL((SELECT 1 FROM ARTICLES WHERE USER_ID=?),NULL)";
 		Object[] args = { userId };
 		return jdbcTemplate.queryForObject(sql, args, int.class);
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.gowtham.dao.ArticleDAOInterface#getArticleId(java.lang.String)
+	 */
+	@Override
 	public Integer getArticleId(String articleName) {
 		String sql = "SELECT IFNULL((SELECT ID FROM ARTICLES WHERE NAME=?),NULL)";
 		Object[] args = { articleName };
 		return jdbcTemplate.queryForObject(sql, args, int.class);
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.gowtham.dao.ArticleDAOInterface#viewArticle(java.lang.Integer)
+	 */
+	@Override
 	public Article viewArticle(Integer id) {
 		String sql = "SELECT ID,USER_ID,NAME,CONTENT,PUBLISHED_DATE,MODIFIED_DATE FROM ARTICLES WHERE ID=?";
 		Object[] args = { id };
@@ -151,24 +206,44 @@ public class ArticleDAO implements DAO<Article> {
 		});
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.gowtham.dao.ArticleDAOInterface#updateArticle(com.gowtham.model.
+	 * Article)
+	 */
+	@Override
 	public int updateArticle(Article article) {
 		String sql = "UPDATE ARTICLES SET TITLE=? , CONTENT=? WHERE ID=?";
 		Object[] args = { article.getName(), article.getContent(), article.getId() };
 		return jdbcTemplate.update(sql, args);
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.gowtham.dao.ArticleDAOInterface#isPresent(java.lang.String,
+	 * java.lang.String)
+	 */
+	@Override
 	public Boolean isPresent(String userName, String articleName) {
-		UserDAO userDAO = new UserDAO();
+		UserDAOInterface userDAO = new UserDAO();
 		final Integer userId = userDAO.getUserId(userName);
 		final String sql = "SELECT IFNULL((select TRUE FROM ARTICLES WHERE NAME=? AND USER_ID=?),FALSE)";
 		Object[] args = { articleName, userId };
 		return jdbcTemplate.queryForObject(sql, args, boolean.class);
 	}
-	
-	public Integer getUserId(Integer articleId){
-		String sql="SELECT USER_ID FROM ARTICLES WHERE ARTICLE_ID=?";
-		Object[] args={articleId};
-		return jdbcTemplate.queryForObject(sql, args,Integer.class);
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.gowtham.dao.ArticleDAOInterface#getUserId(java.lang.Integer)
+	 */
+	@Override
+	public Integer getUserId(Integer articleId) {
+		String sql = "SELECT USER_ID FROM ARTICLES WHERE ARTICLE_ID=?";
+		Object[] args = { articleId };
+		return jdbcTemplate.queryForObject(sql, args, Integer.class);
 	}
-	
+
 }

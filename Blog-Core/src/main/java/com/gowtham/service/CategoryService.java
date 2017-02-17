@@ -3,7 +3,9 @@ package com.gowtham.service;
 import java.util.List;
 
 import com.gowtham.dao.CategoryDAO;
+import com.gowtham.dao.CategoryDAOInterface;
 import com.gowtham.dao.UserDAO;
+import com.gowtham.dao.UserDAOInterface;
 import com.gowtham.exception.ServiceException;
 import com.gowtham.exception.ValidationException;
 import com.gowtham.model.Article;
@@ -12,12 +14,12 @@ import com.gowtham.validator.CategoryValidator;
 
 public class CategoryService {
 	final CategoryValidator categoryValidator = new CategoryValidator();
-	final CategoryDAO categoryDAO = new CategoryDAO();
-	final UserDAO userDAO = new UserDAO();
+	final CategoryDAOInterface categoryDAO = new CategoryDAO();
+	final UserDAOInterface userDAO = new UserDAO();
 	
 	public int save(Category category) throws ServiceException {
 		try {
-			CategoryDAO categoryDAO = new CategoryDAO();
+			CategoryDAOInterface categoryDAO = new CategoryDAO();
 			category.getUser().setId(userDAO.getUserId(category.getUser().getUserName()));
 			categoryValidator.validateSave(category);
 			return categoryDAO.save(category);
@@ -65,7 +67,7 @@ public class CategoryService {
 	}
 	
 	public List<Article> listByCategory(String categoryName) {
-		CategoryDAO categoryDAO = new CategoryDAO();
+		CategoryDAOInterface categoryDAO = new CategoryDAO();
 		return categoryDAO.listByCategory(categoryName); 	
 	}
 	

@@ -3,6 +3,7 @@ package com.gowtham.service;
 import java.util.List;
 
 import com.gowtham.dao.CommentDetailDAO;
+import com.gowtham.dao.CommentDetailDAOInterface;
 import com.gowtham.exception.ServiceException;
 import com.gowtham.exception.ValidationException;
 import com.gowtham.model.CommentDetail;
@@ -10,7 +11,7 @@ import com.gowtham.validator.CommentDetailValidator;
 
 public class CommentDetailService {
 	final CommentDetailValidator commentDetailValidator = new CommentDetailValidator();
-	final CommentDetailDAO commentDetailDAO = new CommentDetailDAO();
+	final CommentDetailDAOInterface commentDetailDAO = new CommentDetailDAO();
 	
 	public int save(CommentDetail commentDetail) throws ServiceException {
 		try {
@@ -44,7 +45,7 @@ public class CommentDetailService {
 	}
 	
 	public List<CommentDetail> getComments(Integer articleId){
-		CommentDetailDAO commentDetailDAO= new CommentDetailDAO();
+		CommentDetailDAOInterface commentDetailDAO= new CommentDetailDAO();
 		return commentDetailDAO.getComments(articleId);
 	}
 	

@@ -3,6 +3,7 @@ package com.gowtham.service;
 import java.util.List;
 
 import com.gowtham.dao.UserDAO;
+import com.gowtham.dao.UserDAOInterface;
 import com.gowtham.exception.ServiceException;
 import com.gowtham.exception.ValidationException;
 import com.gowtham.model.User;
@@ -10,7 +11,7 @@ import com.gowtham.validator.UserValidator;
 
 public class UserService {
 	private UserValidator userValidator = new UserValidator();
-	private UserDAO userDAO = new UserDAO();
+	private UserDAOInterface userDAO = new UserDAO();
 
 	public int register(User user) throws ServiceException {
 		try {
@@ -68,7 +69,7 @@ public class UserService {
 	}
 	
 	public Boolean isValidUser(String userName,String password){
-		UserDAO userDAO = new UserDAO();
+		UserDAOInterface userDAO = new UserDAO();
 		if(userDAO.isValidPassword(userName, password)){
 			return true;
 		}
@@ -76,27 +77,27 @@ public class UserService {
 	}
 	
 	public User getUser(String userName) {
-		UserDAO userDAO = new UserDAO();
+		UserDAOInterface userDAO = new UserDAO();
 		return userDAO.getUser(userName);
 	}
 	
 	public Integer getRole(Integer id){
-		UserDAO userDAO = new UserDAO();
+		UserDAOInterface userDAO = new UserDAO();
 		return userDAO.getRole(id);
 	}
 	
 	public List<User> forAdmin(){
-		UserDAO userDAO = new UserDAO();
+		UserDAOInterface userDAO = new UserDAO();
 		return userDAO.forAdmin();
 	}
 	
 	public void change(Integer id,Integer roleId){
-		final UserDAO userDAO = new UserDAO();
+		final UserDAOInterface userDAO = new UserDAO();
 		userDAO.change(id, roleId);
 	}
 	
 	public String getEmailId(Integer userId){
-		UserDAO userDAO = new UserDAO();
+		UserDAOInterface userDAO = new UserDAO();
 		return userDAO.getEmailId(userId);
 	}
 }

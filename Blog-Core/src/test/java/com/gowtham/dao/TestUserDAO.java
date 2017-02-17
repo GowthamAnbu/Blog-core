@@ -10,7 +10,7 @@ public class TestUserDAO {
 		user.setId(1);
 		user.setPassword("87654321");*/
 		user.setUserName("Gowtham");
-		UserDAO userDAO = new UserDAO();
+		UserDAOInterface userDAO = new UserDAO();
 	/*	UserDAO userDAO = new UserDAO();
 		if (userDAO.getUserId(user.getUserName())==null){
 			System.out.println("null");
