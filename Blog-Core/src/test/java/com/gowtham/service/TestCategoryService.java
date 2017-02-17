@@ -12,7 +12,7 @@ public static void main(String[] args) throws ServiceException{
 	Category category = new Category();
 	category.setName("Html");
 	category.setUser(user);
-	CategoryService categoryService = new CategoryService();
+	CategoryServiceInterface categoryService = new CategoryService();
 	categoryService.addCategory(category);
 }
 

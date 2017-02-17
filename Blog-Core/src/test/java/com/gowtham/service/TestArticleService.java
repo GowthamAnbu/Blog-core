@@ -1,18 +1,11 @@
 package com.gowtham.service;
 
-import java.sql.Timestamp;
-import java.time.LocalDateTime;
-import java.util.List;
-import java.util.ListIterator;
-
-import com.gowtham.dao.ArticleDAO;
 import com.gowtham.exception.ServiceException;
-import com.gowtham.model.Article;
 import com.gowtham.model.User;
 public class TestArticleService {
 public static void main(String[] args)throws ServiceException {
 	User user = new User();
-	ArticleService articleService = new ArticleService();
+	ArticleServiceInterface articleService = new ArticleService();
 /*	user.setUserName("Gowtham");
 	user.setPassword("thisis");
 	Article article = new Article();

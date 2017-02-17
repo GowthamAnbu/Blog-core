@@ -8,7 +8,7 @@ import com.gowtham.model.CategoryDetail;
 public class TestCategoryDetailService {
 	
 public static void main(String[] args) throws ServiceException{
-	CategoryDetailService categoryDetailService = new CategoryDetailService();
+	CategoryDetailServiceInterface categoryDetailService = new CategoryDetailService();
 	CategoryDetail categoryDetail = new CategoryDetail();
 	Category category = new Category();
 	category.setName("c");

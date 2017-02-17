@@ -9,10 +9,17 @@ import com.gowtham.exception.ValidationException;
 import com.gowtham.model.User;
 import com.gowtham.validator.UserValidator;
 
-public class UserService {
+public class UserService implements UserServiceInterface {
 	private UserValidator userValidator = new UserValidator();
 	private UserDAOInterface userDAO = new UserDAO();
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.gowtham.service.UserServiceInterface#register(com.gowtham.model.User)
+	 */
+	@Override
 	public int register(User user) throws ServiceException {
 		try {
 			userValidator.validateSave(user);
@@ -21,10 +28,17 @@ public class UserService {
 			}
 			return userDAO.save(user);
 		} catch (ValidationException e) {
-			throw new ServiceException("Unable to Register",e);
+			throw new ServiceException("Unable to Register", e);
 		}
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.gowtham.service.UserServiceInterface#update(com.gowtham.model.User)
+	 */
+	@Override
 	public int update(User user) throws ServiceException {
 		try {
 			userValidator.validateUpdate(user);
@@ -33,10 +47,17 @@ public class UserService {
 			}
 			return userDAO.update(user);
 		} catch (ValidationException e) {
-			throw new ServiceException("Unable to Update",e);
+			throw new ServiceException("Unable to Update", e);
 		}
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.gowtham.service.UserServiceInterface#delete(com.gowtham.model.User)
+	 */
+	@Override
 	public int delete(User user) throws ServiceException {
 		try {
 			userValidator.validateDelete(user);
@@ -45,58 +66,110 @@ public class UserService {
 			}
 			return userDAO.delete(user.getId());
 		} catch (ValidationException e) {
-			throw new ServiceException("Unable to Delete",e);
+			throw new ServiceException("Unable to Delete", e);
 		}
 	}
-	
-	public List<User> findAll(){
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.gowtham.service.UserServiceInterface#findAll()
+	 */
+	@Override
+	public List<User> findAll() {
 		return userDAO.findAll();
 	}
-	
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.gowtham.service.UserServiceInterface#login(com.gowtham.model.User)
+	 */
+	@Override
 	public int login(User user) throws ServiceException {
 		try {
 			userValidator.validateUpdate(user);
 			if (userDAO.isValidUserName(user.getUserName())) {
 				throw new ServiceException("Invalid User Name");
-			}
-			else if(!userDAO.isValidPassword(user.getUserName(),user.getPassword())){
+			} else if (!userDAO.isValidPassword(user.getUserName(), user.getPassword())) {
 				throw new ServiceException("Invalid Password");
 			}
 			return 1;
 		} catch (ValidationException e) {
-			throw new ServiceException("Unable to Login",e);
+			throw new ServiceException("Unable to Login", e);
 		}
 	}
-	
-	public Boolean isValidUser(String userName,String password){
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.gowtham.service.UserServiceInterface#isValidUser(java.lang.String,
+	 * java.lang.String)
+	 */
+	@Override
+	public Boolean isValidUser(String userName, String password) {
 		UserDAOInterface userDAO = new UserDAO();
-		if(userDAO.isValidPassword(userName, password)){
+		if (userDAO.isValidPassword(userName, password)) {
 			return true;
 		}
 		return false;
 	}
-	
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.gowtham.service.UserServiceInterface#getUser(java.lang.String)
+	 */
+	@Override
 	public User getUser(String userName) {
 		UserDAOInterface userDAO = new UserDAO();
 		return userDAO.getUser(userName);
 	}
-	
-	public Integer getRole(Integer id){
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.gowtham.service.UserServiceInterface#getRole(java.lang.Integer)
+	 */
+	@Override
+	public Integer getRole(Integer id) {
 		UserDAOInterface userDAO = new UserDAO();
 		return userDAO.getRole(id);
 	}
-	
-	public List<User> forAdmin(){
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.gowtham.service.UserServiceInterface#forAdmin()
+	 */
+	@Override
+	public List<User> forAdmin() {
 		UserDAOInterface userDAO = new UserDAO();
 		return userDAO.forAdmin();
 	}
-	
-	public void change(Integer id,Integer roleId){
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.gowtham.service.UserServiceInterface#change(java.lang.Integer,
+	 * java.lang.Integer)
+	 */
+	@Override
+	public void change(Integer id, Integer roleId) {
 		final UserDAOInterface userDAO = new UserDAO();
 		userDAO.change(id, roleId);
 	}
-	
-	public String getEmailId(Integer userId){
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.gowtham.service.UserServiceInterface#getEmailId(java.lang.Integer)
+	 */
+	@Override
+	public String getEmailId(Integer userId) {
 		UserDAOInterface userDAO = new UserDAO();
 		return userDAO.getEmailId(userId);
 	}
