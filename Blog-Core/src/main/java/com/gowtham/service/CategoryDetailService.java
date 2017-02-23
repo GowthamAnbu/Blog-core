@@ -1,21 +1,25 @@
 package com.gowtham.service;
 
-import com.gowtham.dao.ArticleDAO;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import com.gowtham.dao.ArticleDAOInterface;
-import com.gowtham.dao.CategoryDAO;
 import com.gowtham.dao.CategoryDAOInterface;
-import com.gowtham.dao.CategoryDetailDAO;
 import com.gowtham.dao.CategoryDetailDAOInterface;
 import com.gowtham.exception.ServiceException;
 import com.gowtham.exception.ValidationException;
 import com.gowtham.model.CategoryDetail;
 import com.gowtham.validator.CategoryDetailValidator;
 
+@Service
 public class CategoryDetailService implements CategoryDetailServiceInterface {
-	final CategoryDetailValidator categoryDetailValidator = new CategoryDetailValidator();
-	final CategoryDetailDAOInterface categoryDetailDAO = new CategoryDetailDAO();
-	final ArticleDAOInterface articleDAO = new ArticleDAO();
-	final CategoryDAOInterface categoryDAO = new CategoryDAO();
+	CategoryDetailValidator categoryDetailValidator = new CategoryDetailValidator();
+	@Autowired
+	CategoryDetailDAOInterface categoryDetailDAO;
+	@Autowired
+	ArticleDAOInterface articleDAO;
+	@Autowired
+	CategoryDAOInterface categoryDAO;
 
 	/*
 	 * (non-Javadoc)
@@ -27,8 +31,6 @@ public class CategoryDetailService implements CategoryDetailServiceInterface {
 	@Override
 	public int save(CategoryDetail categoryDetail) throws ServiceException {
 		try {
-			ArticleDAOInterface articleDAO = new ArticleDAO();
-			CategoryDAOInterface categoryDAO = new CategoryDAO();
 			categoryDetail.getArticle().setId(articleDAO.getArticleId(categoryDetail.getArticle().getName()));
 			categoryDetail.getCategory().setId(categoryDAO.getCategoryId(categoryDetail.getCategory().getName()));
 			categoryDetailValidator.validateSave(categoryDetail);

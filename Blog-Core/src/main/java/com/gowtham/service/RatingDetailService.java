@@ -1,15 +1,20 @@
 package com.gowtham.service;
 
-import com.gowtham.dao.RatingDetailDAO;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import com.gowtham.dao.RatingDetailDAOInterface;
 import com.gowtham.exception.ServiceException;
 import com.gowtham.exception.ValidationException;
 import com.gowtham.model.RatingDetail;
 import com.gowtham.validator.RatingDetailValidator;
-
+@Service
 public class RatingDetailService implements RatingDetailServiceInterface {
-	final RatingDetailValidator ratingDetailValidator = new RatingDetailValidator();
-	final RatingDetailDAOInterface ratingDetailDAO = new RatingDetailDAO();
+	RatingDetailValidator ratingDetailValidator = new RatingDetailValidator();
+	@Autowired
+	RatingDetailDAOInterface ratingDetailDAO;
 
 	/*
 	 * (non-Javadoc)
@@ -68,8 +73,8 @@ public class RatingDetailService implements RatingDetailServiceInterface {
 	 * @see com.gowtham.service.RatingDetailServiceInterface#findAll()
 	 */
 	@Override
-	public void findAll() {
-		ratingDetailDAO.findAll();
+	public List<RatingDetail> findAll() {
+		return ratingDetailDAO.findAll();
 	}
 
 }

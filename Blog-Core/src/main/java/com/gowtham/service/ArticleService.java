@@ -2,15 +2,13 @@ package com.gowtham.service;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.gowtham.dao.ArticleDAO;
 import com.gowtham.dao.ArticleDAOInterface;
-import com.gowtham.dao.CategoryDAO;
 import com.gowtham.dao.CategoryDAOInterface;
-import com.gowtham.dao.CategoryDetailDAO;
 import com.gowtham.dao.CategoryDetailDAOInterface;
-import com.gowtham.dao.UserDAO;
 import com.gowtham.dao.UserDAOInterface;
 import com.gowtham.exception.ServiceException;
 import com.gowtham.exception.ValidationException;
@@ -21,17 +19,21 @@ import com.gowtham.model.User;
 import com.gowtham.validator.ArticleValidator;
 import com.gowtham.validator.UserValidator;
 
+@Service
 public class ArticleService implements ArticleServiceInterface {
 	final ArticleValidator articleValidator = new ArticleValidator();
-	final ArticleDAOInterface articleDAO = new ArticleDAO();
-	final CategoryServiceInterface categoryService = new CategoryService();
-	final CategoryDetailServiceInterface categoryDetailService = new CategoryDetailService();
-	final UserServiceInterface userService = new UserService();
-	final UserValidator userValidator = new UserValidator();
-	final UserDAOInterface userDAO = new UserDAO();
-	final CategoryDAOInterface categoryDAO = new CategoryDAO();
-	final CategoryDetailDAOInterface categoryDetailDAO = new CategoryDetailDAO();
-	final CategoryDetail categoryDetail = new CategoryDetail();
+	@Autowired
+	ArticleDAOInterface articleDAO;
+	CategoryServiceInterface categoryService=new CategoryService();
+	CategoryDetailServiceInterface categoryDetailService=new CategoryDetailService();
+	UserServiceInterface userService=new UserService();
+	UserValidator userValidator=new UserValidator();
+	@Autowired
+	UserDAOInterface userDAO;
+	@Autowired
+	CategoryDAOInterface categoryDAO;
+	@Autowired
+	CategoryDetailDAOInterface categoryDetailDAO;
 
 	/*
 	 * (non-Javadoc)
@@ -238,7 +240,6 @@ public class ArticleService implements ArticleServiceInterface {
 	 */
 	@Override
 	public Integer getUserId(Integer articleId) {
-		ArticleDAOInterface articleDAO = new ArticleDAO();
 		return articleDAO.getUserId(articleId);
 	}
 }

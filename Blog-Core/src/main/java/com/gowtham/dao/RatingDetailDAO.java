@@ -61,7 +61,7 @@ public class RatingDetailDAO implements RatingDetailDAOInterface {
 	 */
 	@Override
 	public List<RatingDetail> findAll() {
-		String sql = "SELECT ID,ARTICLE_ID,USER_ID,RATINGS FROM CATEGORY_DETAILS";
+		String sql = "SELECT ID,ARTICLE_ID,USER_ID,RATINGS FROM RATINGS_DETAILS";
 		return jdbcTemplate.query(sql, (rs, rowNum) -> {
 			final RatingDetail ratingDetail = new RatingDetail();
 			ratingDetail.setId(rs.getInt("ID"));
@@ -82,7 +82,7 @@ public class RatingDetailDAO implements RatingDetailDAOInterface {
 	 */
 	@Override
 	public RatingDetail findOne(Integer id) {
-		String sql = "SELECT ID,ARTICLE_ID,USER_ID,RATINGS FROM CATEGORY_DETAILS WHERE ID=?";
+		String sql = "SELECT ID,ARTICLE_ID,USER_ID,RATINGS FROM RATINGS_DETAILS WHERE ID=?";
 		Object[] args = { id };
 		return jdbcTemplate.queryForObject(sql, args, (rs, rowNum) -> {
 			final RatingDetail ratingDetail = new RatingDetail();

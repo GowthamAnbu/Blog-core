@@ -2,16 +2,20 @@ package com.gowtham.service;
 
 import java.util.List;
 
-import com.gowtham.dao.UserDAO;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import com.gowtham.dao.UserDAOInterface;
 import com.gowtham.exception.ServiceException;
 import com.gowtham.exception.ValidationException;
 import com.gowtham.model.User;
 import com.gowtham.validator.UserValidator;
 
+@Service
 public class UserService implements UserServiceInterface {
 	private UserValidator userValidator = new UserValidator();
-	private UserDAOInterface userDAO = new UserDAO();
+	@Autowired
+	private UserDAOInterface userDAO;
 
 	/*
 	 * (non-Javadoc)
@@ -110,7 +114,6 @@ public class UserService implements UserServiceInterface {
 	 */
 	@Override
 	public Boolean isValidUser(String userName, String password) {
-		UserDAOInterface userDAO = new UserDAO();
 		if (userDAO.isValidPassword(userName, password)) {
 			return true;
 		}
@@ -124,7 +127,6 @@ public class UserService implements UserServiceInterface {
 	 */
 	@Override
 	public User getUser(String userName) {
-		UserDAOInterface userDAO = new UserDAO();
 		return userDAO.getUser(userName);
 	}
 
@@ -135,7 +137,6 @@ public class UserService implements UserServiceInterface {
 	 */
 	@Override
 	public Integer getRole(Integer id) {
-		UserDAOInterface userDAO = new UserDAO();
 		return userDAO.getRole(id);
 	}
 
@@ -146,7 +147,6 @@ public class UserService implements UserServiceInterface {
 	 */
 	@Override
 	public List<User> forAdmin() {
-		UserDAOInterface userDAO = new UserDAO();
 		return userDAO.forAdmin();
 	}
 
@@ -158,7 +158,6 @@ public class UserService implements UserServiceInterface {
 	 */
 	@Override
 	public void change(Integer id, Integer roleId) {
-		final UserDAOInterface userDAO = new UserDAO();
 		userDAO.change(id, roleId);
 	}
 
@@ -170,7 +169,6 @@ public class UserService implements UserServiceInterface {
 	 */
 	@Override
 	public String getEmailId(Integer userId) {
-		UserDAOInterface userDAO = new UserDAO();
 		return userDAO.getEmailId(userId);
 	}
 }

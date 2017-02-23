@@ -2,20 +2,24 @@ package com.gowtham.service;
 
 import java.util.List;
 
-import com.gowtham.dao.CategoryDAO;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import com.gowtham.dao.CategoryDAOInterface;
-import com.gowtham.dao.UserDAO;
 import com.gowtham.dao.UserDAOInterface;
 import com.gowtham.exception.ServiceException;
 import com.gowtham.exception.ValidationException;
 import com.gowtham.model.Article;
 import com.gowtham.model.Category;
 import com.gowtham.validator.CategoryValidator;
-
+@Service
 public class CategoryService implements CategoryServiceInterface {
-	final CategoryValidator categoryValidator = new CategoryValidator();
-	final CategoryDAOInterface categoryDAO = new CategoryDAO();
-	final UserDAOInterface userDAO = new UserDAO();
+
+	CategoryValidator categoryValidator = new CategoryValidator();
+	@Autowired
+	CategoryDAOInterface categoryDAO;
+	@Autowired
+	UserDAOInterface userDAO;
 
 	/*
 	 * (non-Javadoc)
@@ -26,7 +30,6 @@ public class CategoryService implements CategoryServiceInterface {
 	@Override
 	public int save(Category category) throws ServiceException {
 		try {
-			CategoryDAOInterface categoryDAO = new CategoryDAO();
 			category.getUser().setId(userDAO.getUserId(category.getUser().getUserName()));
 			categoryValidator.validateSave(category);
 			return categoryDAO.save(category);
@@ -75,8 +78,8 @@ public class CategoryService implements CategoryServiceInterface {
 	 * @see com.gowtham.service.CategoryServiceInterface#findAll()
 	 */
 	@Override
-	public void findAll() {
-		categoryDAO.findAll();
+	public List<Category> findAll() {
+		return categoryDAO.findAll();
 	}
 
 	/*
@@ -119,7 +122,6 @@ public class CategoryService implements CategoryServiceInterface {
 	 */
 	@Override
 	public List<Article> listByCategory(String categoryName) {
-		CategoryDAOInterface categoryDAO = new CategoryDAO();
 		return categoryDAO.listByCategory(categoryName);
 	}
 

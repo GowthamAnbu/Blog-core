@@ -2,16 +2,20 @@ package com.gowtham.service;
 
 import java.util.List;
 
-import com.gowtham.dao.CommentDetailDAO;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import com.gowtham.dao.CommentDetailDAOInterface;
 import com.gowtham.exception.ServiceException;
 import com.gowtham.exception.ValidationException;
 import com.gowtham.model.CommentDetail;
 import com.gowtham.validator.CommentDetailValidator;
 
+@Service
 public class CommentDetailService implements CommentDetailServiceInterface {
-	final CommentDetailValidator commentDetailValidator = new CommentDetailValidator();
-	final CommentDetailDAOInterface commentDetailDAO = new CommentDetailDAO();
+	CommentDetailValidator commentDetailValidator = new CommentDetailValidator();
+	@Autowired
+	CommentDetailDAOInterface commentDetailDAO;
 
 	/*
 	 * (non-Javadoc)
@@ -83,7 +87,6 @@ public class CommentDetailService implements CommentDetailServiceInterface {
 	 */
 	@Override
 	public List<CommentDetail> getComments(Integer articleId) {
-		CommentDetailDAOInterface commentDetailDAO = new CommentDetailDAO();
 		return commentDetailDAO.getComments(articleId);
 	}
 
