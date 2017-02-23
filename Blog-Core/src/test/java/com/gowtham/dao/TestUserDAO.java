@@ -1,23 +1,28 @@
 package com.gowtham.dao;
 
-import com.gowtham.model.User;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+
+import com.gowtham.config.AppConfig;
 
 public class TestUserDAO {
 
 	public static void main(String[] args) {
-		
-		User user = new User();/*
+		/*
+		User user = new User();
 		user.setId(1);
-		user.setPassword("87654321");*/
-		user.setUserName("Gowtham");
-		UserDAOInterface userDAO = new UserDAO();
-	/*	UserDAO userDAO = new UserDAO();
-		if (userDAO.getUserId(user.getUserName())==null){
+		user.setPassword("87654321");
+		user.setUserName("Gowtham");*/
+		 AnnotationConfigApplicationContext ctx = new AnnotationConfigApplicationContext(AppConfig.class);
+		 UserDAOInterface userDAO = ctx.getBean(UserDAOInterface.class);
+		/*if (userDAO.getUserId(user.getUserName())==null){
 			System.out.println("null");
 		}
 		else
 			System.out.println(userDAO.getUserId(user.getUserName()));
 	}*/
-		System.out.println(userDAO.forAdmin());
+//		UserDAO userDAO=new UserDAO();
+		System.out.println(userDAO.findAll());
+		
+		ctx.close();
 }
 }

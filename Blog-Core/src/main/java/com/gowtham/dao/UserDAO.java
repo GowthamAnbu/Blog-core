@@ -2,14 +2,19 @@ package com.gowtham.dao;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Repository;
 
 import com.gowtham.model.Role;
 import com.gowtham.model.User;
-import com.gowtham.util.ConnectionUtil;
 
+@Repository
 public class UserDAO implements UserDAOInterface {
-	private JdbcTemplate jdbcTemplate = ConnectionUtil.getJdbcTemplate();
+	@Autowired
+	private JdbcTemplate jdbcTemplate;//=ConnectionUtil.getJdbcTemplate();
 
 	/*
 	 * (non-Javadoc)
@@ -109,9 +114,12 @@ public class UserDAO implements UserDAOInterface {
 	 */
 	@Override
 	public Boolean isValidPassword(String name, String password) {
-		String sql = "SELECT ISVALID_PASSWORD(?,?)";
-		Object[] args = { name, password };
-		return jdbcTemplate.queryForObject(sql, args, boolean.class);
+		String sql = "SELECT PASSWORD FROM USERS WHERE USER_NAME=?";
+		Object[] args = {name};
+		String dbpassword = jdbcTemplate.queryForObject(sql, args,String.class);
+		PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+		return passwordEncoder.matches(password,dbpassword);
+		
 	}
 
 	/*

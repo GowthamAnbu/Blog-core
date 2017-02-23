@@ -2,15 +2,18 @@ package com.gowtham.dao;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.stereotype.Repository;
 
 import com.gowtham.model.Article;
 import com.gowtham.model.CommentDetail;
 import com.gowtham.model.User;
-import com.gowtham.util.ConnectionUtil;
 
+@Repository
 public class CommentDetailDAO implements CommentDetailDAOInterface {
-	private JdbcTemplate jdbcTemplate = ConnectionUtil.getJdbcTemplate();
+	@Autowired
+	private JdbcTemplate jdbcTemplate;
 
 	/*
 	 * (non-Javadoc)
