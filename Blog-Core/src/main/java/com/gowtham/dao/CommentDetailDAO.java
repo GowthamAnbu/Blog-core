@@ -61,7 +61,7 @@ public class CommentDetailDAO implements CommentDetailDAOInterface {
 	 */
 	@Override
 	public List<CommentDetail> findAll() {
-		String sql = "SELECT ID,ARTICLE_ID,USER_ID,COMMENTS FROM CATEGORY_DETAILS";
+		String sql = "SELECT ID,ARTICLE_ID,USER_ID,COMMENTS FROM COMMENTS_DETAILS";
 		return jdbcTemplate.query(sql, (rs, rowNum) -> {
 			final CommentDetail commentDetail = new CommentDetail();
 			commentDetail.setId(rs.getInt("ID"));
@@ -82,7 +82,7 @@ public class CommentDetailDAO implements CommentDetailDAOInterface {
 	 */
 	@Override
 	public CommentDetail findOne(Integer id) {
-		String sql = "SELECT ID,ARTICLE_ID,USER_ID,COMMENTS FROM CATEGORY_DETAILS WHERE ID=?";
+		String sql = "SELECT ID,ARTICLE_ID,USER_ID,COMMENTS FROM COMMENTS_DETAILS WHERE ID=?";
 		Object[] args = { id };
 		return jdbcTemplate.queryForObject(sql, args, (rs, rowNum) -> {
 			final CommentDetail commentDetail = new CommentDetail();

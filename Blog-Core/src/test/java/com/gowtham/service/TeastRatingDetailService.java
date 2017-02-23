@@ -3,15 +3,12 @@ package com.gowtham.service;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 import com.gowtham.config.AppConfig;
-import com.gowtham.dao.CommentDetailDAOInterface;
 
-public class TestCommentDetail {
-	
+public class TeastRatingDetailService {
 public static void main(String[] args) {
 	AnnotationConfigApplicationContext ctx = new AnnotationConfigApplicationContext(AppConfig.class);
-	CommentDetailDAOInterface commentDetailDAO=ctx.getBean(CommentDetailDAOInterface.class);
-	System.out.println(commentDetailDAO.findAll());
+	RatingDetailService ratingService=ctx.getBean(RatingDetailService.class);
+	System.out.println(ratingService.findAll());
 	ctx.close();
 }
-
 }

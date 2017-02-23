@@ -1,5 +1,7 @@
 package com.gowtham.service;
 
+import java.util.List;
+
 import com.gowtham.exception.ServiceException;
 import com.gowtham.model.RatingDetail;
 
@@ -11,6 +13,6 @@ public interface RatingDetailServiceInterface {
 
 	int delete(RatingDetail ratingDetail) throws ServiceException;
 
-	void findAll();
+	List<RatingDetail> findAll();
 
 }

@@ -14,7 +14,7 @@ public interface CategoryServiceInterface {
 
 	int delete(Category category) throws ServiceException;
 
-	void findAll();
+	List<Category> findAll();
 
 	int addCategory(Category category) throws ServiceException;
 
